@@ -47,6 +47,16 @@ public class User {
 
     public void changeDeleteFlag() {
         this.deleteYn = DELETE_FLAG;
+        this.deleteDate = LocalDateTime.now();
+    }
+
+    public void update(String userId, String email, String name, String introText, char emailSearchYn, char randomYn) {
+        this.userId = userId;
+        this.email = email;
+        this.name = name;
+        this.introText = introText;
+        this.emailSearchYn = emailSearchYn;
+        this.randomYn = randomYn;
     }
 
     @Builder

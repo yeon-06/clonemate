@@ -3,6 +3,7 @@ package com.ndex.clonemate.user.service;
 import com.ndex.clonemate.user.domain.User;
 import com.ndex.clonemate.user.domain.UserRepository;
 import com.ndex.clonemate.user.web.dto.UserResponseDto;
+import com.ndex.clonemate.user.web.dto.UserUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +29,12 @@ public class UserService {
         entity.changeDeleteFlag();
     }
 
+    @Transactional
+    public void update(String userId, UserUpdateRequestDto request) {
+        User entity = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 사용자가 없습니다."));
+
+        entity.update(request.getUserId(), request.getEmail(), request.getName(),
+                request.getIntroText(), request.getEmailSearchYn(), request.getRandomYn());
+    }
 }
