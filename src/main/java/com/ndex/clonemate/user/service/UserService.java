@@ -9,11 +9,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+    private final static char FLAG_YES = 'Y';
+    private final static char FLAG_NO = 'N';
     private final UserRepository userRepository;
 
-    public UserResponseDto findById(String userId) {
-        User entity = userRepository.findById(userId)
+    public UserResponseDto findByUserId(String userId) {
+        User entity = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 사용자가 없습니다."));
         return new UserResponseDto(entity);
     }
+
 }

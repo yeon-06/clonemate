@@ -4,7 +4,6 @@ import com.ndex.clonemate.user.service.UserService;
 import com.ndex.clonemate.user.web.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +16,7 @@ public class UserController {
     @ResponseBody
     @GetMapping("/users/{userId}")
     public UserResponseDto myPage(@PathVariable String userId) {
-        return userService.findById(userId);
+        return userService.findByUserId(userId);
     }
+
 }

@@ -14,7 +14,10 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue
-    private String id;
+    private Long id;
+
+    @Column(nullable = false, name = "user_id")
+    private String userId;
 
     @Column(nullable = false)
     private String email;
@@ -25,26 +28,27 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "introText")
+    @Column(name = "intro_text")
     private String introText;
 
-    @Column(nullable = false, name = "deleteYn")
+    @Column(nullable = false, name = "delete_yn")
     private char deleteYn;
 
-    @Column(name = "deleteDate")
+    @Column(name = "delete_date")
     private LocalDateTime deleteDate;
 
-    @Column(nullable = false, name = "emailSearchYn")
+    @Column(nullable = false, name = "email_search_yn")
     private char emailSearchYn;
 
-    @Column(nullable = false, name = "randomYn")
+    @Column(nullable = false, name = "random_yn")
     private char randomYn;
 
     @Builder
-    public User(String id, String name, String email,
+    public User(Long id, String userId, String name, String email,
                 String password, String introText, char deleteYn,
                 LocalDateTime deleteDate, char emailSearchYn, char randomYn) {
         this.id = id;
+        this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = password;
