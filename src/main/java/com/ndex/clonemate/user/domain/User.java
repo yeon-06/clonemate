@@ -43,6 +43,12 @@ public class User {
     @Column(nullable = false, name = "random_yn")
     private char randomYn;
 
+    private final static char DELETE_FLAG = 'Y';
+
+    public void changeDeleteFlag() {
+        this.deleteYn = DELETE_FLAG;
+    }
+
     @Builder
     public User(Long id, String userId, String name, String email,
                 String password, String introText, char deleteYn,

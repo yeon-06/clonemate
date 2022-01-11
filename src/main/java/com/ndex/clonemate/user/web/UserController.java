@@ -5,6 +5,7 @@ import com.ndex.clonemate.user.web.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,4 +20,9 @@ public class UserController {
         return userService.findByUserId(userId);
     }
 
+    @ResponseBody
+    @PatchMapping("/users/{userId}")
+    public void deleteUser(@PathVariable String userId) {
+        userService.delete(userId);
+    }
 }
