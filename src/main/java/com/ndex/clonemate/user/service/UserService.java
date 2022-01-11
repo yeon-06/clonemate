@@ -18,22 +18,22 @@ public class UserService {
     private final static String ERROR_NO_USER = "[ERROR] 해당 사용자가 없습니다.";
     private final UserRepository userRepository;
 
-    public UserResponseDto findByUserId(String userId) {
-        User entity = userRepository.findByUserId(userId)
+    public UserResponseDto findByUserId(Long id) {
+        User entity = userRepository.findByUserId(id)
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_USER));
         return new UserResponseDto(entity);
     }
 
     @Transactional
-    public void delete(String userId) {
-        User entity = userRepository.findByUserId(userId)
+    public void delete(Long id) {
+        User entity = userRepository.findByUserId(id)
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_USER));
         entity.changeDeleteFlag();
     }
 
     @Transactional
-    public void update(String userId, UserUpdateRequestDto request) {
-        User entity = userRepository.findByUserId(userId)
+    public void update(Long id, UserUpdateRequestDto request) {
+        User entity = userRepository.findByUserId(id)
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_USER));
 
         entity.update(request.getUserId(), request.getEmail(), request.getName(),

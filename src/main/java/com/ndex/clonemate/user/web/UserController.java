@@ -13,20 +13,20 @@ public class UserController {
     private final UserService userService;
 
     @ResponseBody
-    @GetMapping("/users/{userId}")
-    public UserResponseDto myPage(@PathVariable String userId) {
-        return userService.findByUserId(userId);
+    @GetMapping("/users/{id}")
+    public UserResponseDto myPage(@PathVariable Long id) {
+        return userService.findByUserId(id);
     }
 
     @ResponseBody
-    @DeleteMapping("/users/{userId}")
-    public void deleteUser(@PathVariable String userId) {
-        userService.delete(userId);
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.delete(id);
     }
 
     @ResponseBody
-    @PatchMapping("/users/{userId}")
-    public void deleteUser(@RequestBody UserUpdateRequestDto userUpdateRequestDto, @PathVariable String userId) {
-        userService.update(userId, userUpdateRequestDto);
+    @PatchMapping("/users/{id}")
+    public void deleteUser(@RequestBody UserUpdateRequestDto userUpdateRequestDto, @PathVariable Long id) {
+        userService.update(id, userUpdateRequestDto);
     }
 }

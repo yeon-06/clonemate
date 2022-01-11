@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("select u from User u where u.userId = :userId and u.deleteYn = 'N'")
-    Optional<User> findByUserId(@Param("userId") String userId);
+    @Query("select u from User u where u.id = :id and u.deleteYn = 'N'")
+    Optional<User> findByUserId(@Param("id") Long id);
 }
