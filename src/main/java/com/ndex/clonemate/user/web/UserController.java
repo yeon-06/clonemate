@@ -20,13 +20,13 @@ public class UserController {
 
     @ResponseBody
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
 
     @ResponseBody
     @PatchMapping("/users/{id}")
-    public void deleteUser(@RequestBody UserUpdateRequestDto userUpdateRequestDto, @PathVariable Long id) {
+    public void update(@RequestBody UserUpdateRequestDto userUpdateRequestDto, @PathVariable Long id) {
         userService.update(id, userUpdateRequestDto);
     }
 }
