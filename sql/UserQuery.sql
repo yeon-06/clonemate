@@ -1,7 +1,7 @@
 -- create User Table
 CREATE TABLE USER (
-    id INT NOT NULL,
-    user_id VARCHAR(20) NOT NULL,
+    user_id INT NOT NULL,
+    account VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL,
     name VARCHAR(20) NOT NULL,
     password VARCHAR(100) NOT NULL,

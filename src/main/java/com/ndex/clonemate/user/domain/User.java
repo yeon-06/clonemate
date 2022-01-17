@@ -14,9 +14,10 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false, name = "user_id")
+    @Column(nullable = false, name = "account")
     private String userId;
 
     @Column(nullable = false)
