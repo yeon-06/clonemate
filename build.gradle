@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.5.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    // querydsl 추가
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
     id 'java'
 }
@@ -21,22 +22,42 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'junit:junit:4.13.1'
-    implementation "org.mariadb.jdbc:mariadb-java-client"
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.session:spring-session-data-redis'
     compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    implementation 'junit:junit:4.13.1'
+    testImplementation "org.mockito:mockito-core:3.9.0"
+
+    //string 처리 관련 library
     implementation 'org.apache.commons:commons-lang3'
+
+    // querydsl 추가
     implementation "com.querydsl:querydsl-jpa"
+    //implementation "com.querydsl:querydsl-apt" <-- 를 넣으면 duplicate class error 뜸.
 
     annotationProcessor(
             'org.projectlombok:lombok',
             "javax.persistence:javax.persistence-api",
             "javax.annotation:javax.annotation-api",
+            //"com.querydsl:querydsl-apt:jpa" <-- 를 넣으면 duplicate class error 뜸.
     )
+
+    //mongoDB
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: '2.2.0'
 }
 
+// querydsl -----
+//Q타입 생성 : Gradle → Tasks → build → clean, Gradle → Tasks → other → compileQuerydsl
 def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
@@ -55,6 +76,7 @@ configurations {
 compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
+// querydsl ——
 
 test {
     useJUnitPlatform()
