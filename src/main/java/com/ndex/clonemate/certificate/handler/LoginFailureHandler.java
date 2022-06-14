@@ -1,7 +1,6 @@
 package com.ndex.clonemate.certificate.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ndex.clonemate.certificate.handler.dto.LoginResponseDto;
 import com.ndex.clonemate.global.dto.ApiResult;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,11 +32,9 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
             errorMessage = "Expired password";
         }
 
-        LoginResponseDto responseDto = new LoginResponseDto();
-        ApiResult<LoginResponseDto> apiResult = ApiResult.<LoginResponseDto>builder()
+        ApiResult<Void> apiResult = ApiResult.<Void>builder()
                 .success(false)
                 .errorMessage(errorMessage)
-                .data(responseDto)
                 .build();
 
         objectMapper.writeValue(response.getWriter(), apiResult);
