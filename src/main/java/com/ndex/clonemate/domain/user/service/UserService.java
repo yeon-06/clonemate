@@ -5,7 +5,6 @@ import com.ndex.clonemate.domain.user.repository.UserRepository;
 import com.ndex.clonemate.domain.user.web.dto.UserRegisterRequestDto;
 import com.ndex.clonemate.domain.user.web.dto.UserResponseDto;
 import com.ndex.clonemate.domain.user.web.dto.UserUpdateRequestDto;
-import java.util.Optional;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,16 +13,26 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class UserService {
-    private final static String ERROR_NO_USER = "[ERROR] 해당 사용자가 없습니다.";
 
     private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;
 
     @Transactional
     public Long register(UserRegisterRequestDto requestDto) {
+        validateDuplicate(requestDto);
         User entity = requestDto.toEntity();
         entity.encodePassword(encoder);
         return userRepository.save(entity).getId();
+    }
+
+    private void validateDuplicate(UserRegisterRequestDto requestDto) {
+        if (userRepository.existsByEmail(requestDto.getEmail())) {
+            throw new IllegalStateException("[ERROR] 중복된 메일이 존재합니다.");
+        }
+
+        if (userRepository.existsByAccount(requestDto.getUserId())) {
+            throw new IllegalStateException("[ERROR] 중복된 아이디가 존재합니다.");
+        }
     }
 
     public UserResponseDto findByUserId(long id) {
@@ -46,16 +55,14 @@ public class UserService {
 
     private User findUser(long id) {
         return userRepository.findByUserId(id)
-                .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_USER));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 사용자가 없습니다."));
     }
 
     public boolean haveUserByEmail(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return user.isPresent();
+        return userRepository.existsByEmail(email);
     }
 
     public boolean haveUserByAccount(String account) {
-        Optional<User> user = userRepository.findByAccount(account);
-        return user.isPresent();
+        return userRepository.existsByAccount(account);
     }
 }
