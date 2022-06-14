@@ -6,10 +6,9 @@ public class ApiUtils {
     private ApiUtils() {
     }
 
-    public static ApiResult<String> createSuccessEmptyApi() {
-        return ApiResult.<String>builder()
+    public static ApiResult<Void> createSuccessEmptyApi() {
+        return ApiResult.<Void>builder()
                 .success(true)
-                .data("")
                 .build();
     }
 
