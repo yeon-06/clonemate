@@ -5,6 +5,7 @@ import com.ndex.clonemate.domain.user.repository.UserRepository;
 import com.ndex.clonemate.domain.user.web.dto.UserRegisterRequestDto;
 import com.ndex.clonemate.domain.user.web.dto.UserResponseDto;
 import com.ndex.clonemate.domain.user.web.dto.UserUpdateRequestDto;
+import java.util.List;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -64,5 +65,9 @@ public class UserService {
 
     public boolean haveUserByAccount(String account) {
         return userRepository.existsByAccount(account);
+    }
+
+    public List<User> findRandomUsers() {
+        return userRepository.findByRandom('Y', 'N', 'Y');
     }
 }

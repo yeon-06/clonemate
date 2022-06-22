@@ -1,11 +1,14 @@
 package com.ndex.clonemate.domain.user.web;
 
 import com.ndex.clonemate.domain.user.service.UserService;
+import com.ndex.clonemate.domain.user.web.dto.RandomUserResponseDto;
 import com.ndex.clonemate.domain.user.web.dto.UserRegisterRequestDto;
 import com.ndex.clonemate.domain.user.web.dto.UserResponseDto;
 import com.ndex.clonemate.domain.user.web.dto.UserUpdateRequestDto;
 import com.ndex.clonemate.global.dto.ApiResult;
 import com.ndex.clonemate.global.utils.ApiUtils;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +31,17 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResult<Long> register(@RequestBody UserRegisterRequestDto requestDto) {
         return ApiUtils.createSuccessApi(userService.register(requestDto));
+    }
+
+    //// 사용자 목록 ////
+    @GetMapping("/users")
+    public ApiResult<List<RandomUserResponseDto>> findRandomUsers() {
+        List<RandomUserResponseDto> users = userService.findRandomUsers()
+                .stream()
+                .map(RandomUserResponseDto::new)
+                .collect(Collectors.toList());
+
+        return ApiUtils.createSuccessApi(users);
     }
 
     //// 사용자 정보 관련 ////
