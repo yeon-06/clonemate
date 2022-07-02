@@ -32,6 +32,10 @@ public class CustomAuthenticationToken extends AbstractAuthenticationToken {
         super(authorities);
     }
 
+    public long getId() {
+        return id;
+    }
+
     @Override
     public Object getCredentials() {
         return this.credentials;

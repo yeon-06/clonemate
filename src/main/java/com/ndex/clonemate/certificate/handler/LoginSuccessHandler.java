@@ -2,6 +2,7 @@ package com.ndex.clonemate.certificate.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ndex.clonemate.certificate.handler.dto.LoginResponseDto;
+import com.ndex.clonemate.certificate.model.CustomAuthenticationToken;
 import com.ndex.clonemate.global.dto.ApiResult;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +19,12 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
-        String account = authentication.getName();
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        LoginResponseDto responseDto = new LoginResponseDto();
-        responseDto.setAccount(account);
+        CustomAuthenticationToken customAuthenticationToken = (CustomAuthenticationToken) authentication;
+        LoginResponseDto responseDto = new LoginResponseDto(customAuthenticationToken.getId(),
+                customAuthenticationToken.getAccount());
 
         ApiResult<LoginResponseDto> apiResult = ApiResult.<LoginResponseDto>builder()
                 .success(true)
