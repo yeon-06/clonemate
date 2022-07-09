@@ -1,14 +1,20 @@
 plugins {
     id 'org.springframework.boot' version '2.5.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+
     // querydsl 추가
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
-    id 'java'
 }
 
 group = 'com.1ndex'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '8'
+
+bootJar {
+    archivesBaseName = 'clonetodo-backend'
+    archiveFileName = 'clonetodo-backend-1.0.0.jar'
+}
 
 configurations {
     compileOnly {
@@ -54,6 +60,12 @@ dependencies {
 
     // *** DB ***
 
+    //jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //postgresql
+    runtimeOnly 'org.postgresql:postgresql'
+
     // querydsl
     implementation "com.querydsl:querydsl-jpa"
     //implementation "com.querydsl:querydsl-apt" <-- 를 넣으면 duplicate class error 뜸.
@@ -61,13 +73,6 @@ dependencies {
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.session:spring-session-data-redis'
-
-    // mariadb
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-
-    //mongoDB
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-    testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: '2.2.0'
 }
 
 // querydsl -----
