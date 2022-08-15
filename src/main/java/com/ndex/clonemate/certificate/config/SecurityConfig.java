@@ -1,9 +1,9 @@
 package com.ndex.clonemate.certificate.config;
 
+import com.ndex.clonemate.certificate.filter.CustomAuthenticationFilter;
 import com.ndex.clonemate.certificate.handler.LoginFailureHandler;
 import com.ndex.clonemate.certificate.handler.LoginSuccessHandler;
 import com.ndex.clonemate.certificate.provider.CustomAuthenticationProvider;
-import com.ndex.clonemate.certificate.filter.CustomAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,28 +15,48 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final String ALLOWED_METHOD_NAMES = "GET,HEAD,POST,PUT,DELETE,TRACE,OPTIONS,PATCH";
 
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.cors().configurationSource(corsConfigurationSource());
 
         http.authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/users", "/login**", "/users/email/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(customAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
 
-        http.formLogin()
-                .disable();
+        http.formLogin().disable();
 
         http.csrf().disable();
+    }
+
+    private CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Override
