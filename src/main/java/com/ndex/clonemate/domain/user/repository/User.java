@@ -109,6 +109,7 @@ public class User {
         this.emailSearchYn=YES_FLAG;
         this.certifyYn=NO_FLAG;
         this.deleteYn=NO_FLAG;
+        this.randomYn=NO_FLAG;
     }
 
     private boolean isValidString(String str) {
