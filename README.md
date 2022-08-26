@@ -13,3 +13,9 @@
       ◾ MariaDB
       ◾ IntelliJ
       ◾ Gradle
+
+## ✔ 배포
+1. gradle bootJar 실행
+2. docker image 생성
+3. docker push images
+4. ec2 콘솔에서 docker pull iamges
