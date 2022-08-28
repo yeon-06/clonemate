@@ -11,11 +11,6 @@ group = 'com.1ndex'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '8'
 
-bootJar {
-    archivesBaseName = 'clonetodo-backend'
-    archiveFileName = 'clonetodo-backend-1.0.0.jar'
-}
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -24,6 +19,11 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+bootJar {
+    archivesBaseName='clonetodo'
+    archiveFileName='clonetodo.jar'
 }
 
 dependencies {
