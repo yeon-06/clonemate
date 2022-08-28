@@ -14,8 +14,13 @@
       ◾ IntelliJ
       ◾ Gradle
 
-## ✔ 배포
+## ✔ AWS 배포
 1. gradle bootJar 실행
 2. docker image 생성
 3. docker push images
 4. ec2 콘솔에서 docker pull iamges
+
+## ✔ heroku 배포
+1. deploy 탭에서 자동 배포
+2. 배포 테스트 시 manual deploy 이용
+3. H10 에러 뜨면 procfile 로 빌드 커맨드 설정
